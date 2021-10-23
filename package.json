@@ -1,0 +1,28 @@
+{
+  "name": "tps_reports_almost_ready_tt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DerTodd/TPS_Reports_Almost_Ready_TT.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DerTodd/TPS_Reports_Almost_Ready_TT/issues"
+  },
+  "homepage": "https://github.com/DerTodd/TPS_Reports_Almost_Ready_TT#readme",
+  "dependencies": {
+    "asciiart-logo": "^0.2.6",
+    "chalk": "^4.1.2",
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquirer": "^8.2.0",
+    "mysql2": "^2.3.2"
+  }
+}
