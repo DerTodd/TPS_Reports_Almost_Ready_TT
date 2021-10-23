@@ -31,19 +31,31 @@ const db = mysql.createConnection(
 //   });
 
 
-// Query database
+// Query database to show all departments
 db.query('SELECT * FROM department', function (err, results) {
     console.log(results);
     console.table(results);
   });
+// Query database to show all roles  
   db.query('SELECT * FROM roles', function (err, results) {
     console.log(results);
     console.table(results);
   });
+// Query database to show all employees  
   db.query('SELECT * FROM employee', function (err, results) {
     console.log(results);
     console.table(results);
   });
+//Query to get role with salary and department
+db.query("SELECT roles.title AS 'Job Title', roles.id AS 'Role ID', department.dept_name AS 'Department', roles.salary AS salary FROM roles JOIN department ON roles.department_id = department.id;", function (err, results) {
+  console.log(results);
+  console.table(results);
+  });
+
+
+
+
+
 //add to employee table
 function addEmployee(){ 
 let toInsert = 4;

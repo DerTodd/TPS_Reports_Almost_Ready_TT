@@ -1,9 +1,9 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const Employee = require('./lib/Employee');
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
+// const Employee = require('./lib/Employee');
+// const Manager = require('./lib/Manager');
+// const Engineer = require('./lib/Engineer');
+// const Intern = require('./lib/Intern');
 
 
 // TODO: Include packages needed for this application
@@ -84,7 +84,14 @@ inquirer
 // err ? console.error(err) : console.log('Commit logged!')
 // );
 })
-
+const fristQuestion = [
+    {
+    type: 'rawlist',
+    name: 'type',
+    message: 'What would you like to do?',
+    choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'add a role', 'add an employee', 'update an employee role']
+    },
+];
 
 const managerQuestions = [
 
@@ -180,9 +187,68 @@ const internOrEngineer =[
     choices: ['Engineer', 'Intern', 'Build Website']
     },
 ];
-
 function ask() {
-  inquirer.prompt(managerQuestions).then((answers) => {
+    inquirer.prompt(fristQuestion).then((answers) => {
+      //output.push(answers);
+      console.log(answers.type);
+      switch (answers.type) {
+        case 'View all departments':
+            console.log("first answer " + answers);
+            db.query('SELECT * FROM department', function (err, results) {
+                console.log(results);
+                console.table(results);
+              });
+          break;
+        case 'View all roles':
+          licenseType = "![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)";
+          licenseWebsite = "(https://opensource.org/licenses/Apache-2.0)";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          break;
+        case 'View all employees':
+          licenseType = "![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)";
+          licenseWebsite = "(https://www.boost.org/LICENSE_1_0.txt)";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          break;
+        case 'Add a department':
+          licenseType = "![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)";
+          licenseWebsite = "(https://opensource.org/licenses/BSD-3-Clause)";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          break;
+        case 'add a role':
+          licenseType = "![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)";
+          licenseWebsite = "(http://creativecommons.org/publicdomain/zero/1.0/)";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          break;
+    
+        case 'add an employee':
+          licenseType = "![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)";
+          licenseWebsite = "(https://opensource.org/licenses/EPL-1.0)";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          break;
+        case 'update an employee role':
+          licenseType = "![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)";
+          licenseWebsite = "(https://www.gnu.org/licenses/gpl-3.0)";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          break;
+        default:
+          licenseType = "";
+          licenseWebsite = "";
+          console.log(licenseType);
+          console.log(licenseWebsite);
+          
+      }
+    ask();
+  })
+  
+}
+function ask1() {
+  inquirer.prompt(fristQuestion).then((answers) => {
     output.push(answers);
     console.log(answers);
     //const employee = new Employee(answers.name, answers.id, answers.email);
@@ -249,7 +315,7 @@ function askEngineerIntern() {
     err ? console.log(err) : console.log('Successfully ENDED THIS INSANITY index.html!')
     );
   }
-//ask();
+
 function renderLicenseLink(data) {
     switch (data) {
       case "MIT":
@@ -333,3 +399,4 @@ function renderLicenseLink(data) {
         
     }
 }
+ask();
