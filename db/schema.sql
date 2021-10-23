@@ -11,7 +11,7 @@ CREATE TABLE department (
 CREATE TABLE roles (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(80) NOT NULL,
-  salary DECIMAL,
+  salary DECIMAL(9,2),
   department_id INT,
   FOREIGN KEY (department_id)
   REFERENCES department(id)
@@ -24,6 +24,7 @@ CREATE TABLE employee (
   last_name VARCHAR(80) NOT NULL,
   role_id INT,
   manager_id INT,
+  date_updated DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
   FOREIGN KEY (role_id)
   REFERENCES roles(id)
   ON DELETE SET NULL,
