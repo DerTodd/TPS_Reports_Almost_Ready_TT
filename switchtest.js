@@ -5,7 +5,7 @@ const fristQuestion = [
     type: 'rawlist',
     name: 'query',
     message: 'What would you like to do?',
-    choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'add a role', 'add an employee', 'update an employee role']
+    choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'add a role', 'add an employee', 'update an employee role', 'Exit']
     },
 ];
 function ask() {
@@ -19,47 +19,41 @@ function ask() {
         case 'View all departments':
             console.log("first answer " + desiredAction);
             db.query('SELECT * FROM department', function (err, results) {
-                console.log(results);
                 console.table(results);
               });
           break;
         case 'View all roles':
             console.log("second answer " + desiredAction);
             db.query("SELECT roles.title AS 'Job Title', roles.id AS 'Role ID', department.dept_name AS 'Department', roles.salary AS salary FROM roles JOIN department ON roles.department_id = department.id;", function (err, results) {
-                console.log(results);
                 console.table(results);
             });
           break;
         case 'View all employees':
-          licenseType = "![License](https://img.shields.io/badge/License-Boost%201.0-lightblue.svg)";
-          licenseWebsite = "(https://www.boost.org/LICENSE_1_0.txt)";
-          console.log(licenseType);
-          console.log(licenseWebsite);
+          console.log('Third answer ' + desiredAction);
+          db.query("SELECT e.id AS 'ID', e.first_name AS 'First Name', e.last_name AS 'Last Name', roles.title AS 'Job Title', department.dept_name AS 'Department', roles.salary AS 'Salary',  CONCAT(m.first_name,' ',m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN roles ON e.role_id = roles.id JOIN department ON department.id = roles.department_id;", function (err, results) {
+            console.table(results);
+            });
           break;
         case 'Add a department':
-          licenseType = "![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)";
-          licenseWebsite = "(https://opensource.org/licenses/BSD-3-Clause)";
-          console.log(licenseType);
-          console.log(licenseWebsite);
+            console.log('Forth answer ' + desiredAction);
+            addDepartment();
           break;
         case 'add a role':
-          licenseType = "![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)";
-          licenseWebsite = "(http://creativecommons.org/publicdomain/zero/1.0/)";
-          console.log(licenseType);
-          console.log(licenseWebsite);
+            console.log('Fifth answer ' + desiredAction);
+            addRole();
           break;
     
         case 'add an employee':
-          licenseType = "![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)";
-          licenseWebsite = "(https://opensource.org/licenses/EPL-1.0)";
-          console.log(licenseType);
-          console.log(licenseWebsite);
+            console.log('Sixth answer ' + desiredAction);
+            addEmployee();
           break;
         case 'update an employee role':
-          licenseType = "![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)";
-          licenseWebsite = "(https://www.gnu.org/licenses/gpl-3.0)";
-          console.log(licenseType);
-          console.log(licenseWebsite);
+            console.log('Seventh answer ' + desiredAction);
+            updateEmployeeRole();
+          break;
+          case 'Exit':
+            console.log('Eighth answer ' + desiredAction);
+            updateEmployeeRole();
           break;
         default:
           licenseType = "";
