@@ -107,7 +107,7 @@ function addDepartment(){
     };
 
     //update employee's Role to db
-  function addRoles(){ 
+  function addEmployeeRoles(){ 
     let toInsert = 4;
     let tableR = 'roles';
     let title = 'Angel';
@@ -121,6 +121,22 @@ function addDepartment(){
       console.log(result);
     });
     };
+
+    //update an employee's role
+    function updateEmployeeRoles(){ 
+      let toInsert = 4;
+      let tableR = 'employee';
+      let role_id = 7;
+      let id = 2;
+      var insertsql = `UPDATE ${tableR} SET role_id = ` + role_id + " WHERE id =  " + id +";"
+      db.query(insertsql, (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        console.log(result);
+      });
+      };
+
   //HOMEWORK HELP
 // let toDelete = 4;
 // let table = 'course_names';
