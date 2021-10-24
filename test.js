@@ -51,6 +51,10 @@ db.query("SELECT roles.title AS 'Job Title', roles.id AS 'Role ID', department.d
   console.log(results);
   console.table(results);
   });
+  //Query to get employee with department and role
+db.query("SELECT e.id AS 'ID', e.first_name AS 'First Name', e.last_name AS 'Last Name', roles.title AS 'Job Title', department.dept_name AS 'Department', roles.salary AS 'Salary',  CONCAT(m.first_name,' ',m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN roles ON e.role_id = roles.id JOIN department ON department.id = roles.department_id;", function (err, results) {
+  console.table(results);
+  });
 
 
 
