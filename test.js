@@ -149,6 +149,28 @@ function addDepartment(){
       });
       };
 
+//Update employee's manager
+function updateEmployeeManager(){ 
+  let tableR = 'employee';
+  let manager_id = 7;
+  let id = 2;
+  var insertsql = `UPDATE ${tableR} SET manager_id = ` + manager_id + " WHERE id =  " + id +";"
+  db.query(insertsql, (err, result) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(result);
+    
+  });
+  };
+
+//show emplyees by manager
+db.query("SELECT CONCAT(m.first_name,' ',m.last_name) AS Manager, e.id AS 'ID', e.first_name AS 'First Name', e.last_name AS 'Last Name', roles.title AS 'Job Title', department.dept_name AS 'Department', roles.salary AS 'Salary',  CONCAT(m.first_name,' ',m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN roles ON e.role_id = roles.id JOIN department ON department.id = roles.department_id ORDER BY manager;", function (err, results) {
+  console.table(results);
+  });
+
+//
+
   //HOMEWORK HELP
 // let toDelete = 4;
 // let table = 'course_names';
