@@ -67,7 +67,19 @@ db.query("SELECT e.id AS 'ID', e.first_name AS 'First Name', e.last_name AS 'Las
   console.log(result);
 });
 };
-
+//Query Departmental budget
+function showBudget() {
+  let tableR = 'roles'
+  let department_id=3
+  var insertsql = "SELECT roles.department_id, SUM(roles.salary) AS 'department total' FROM roles WHERE roles.department_id =" + department_id + "GROUP BY roles.department_id;"
+db.query(insertsql, (err, results) => {
+  if (err) {
+    console.log(err);
+  }
+  console.table(results);
+  returnToMain();
+});
+};
 
 
 
@@ -160,7 +172,7 @@ function updateEmployeeManager(){
       console.log(err);
     }
     console.log(result);
-    
+
   });
   };
 

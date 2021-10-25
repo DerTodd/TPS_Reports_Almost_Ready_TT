@@ -59,7 +59,7 @@ const fristQuestion = [
     type: 'rawlist',
     name: 'query',
     message: 'What would you like to do?',
-    choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'add a role', 'add an employee', 'update an employee role', 'let me talk to the manager', 'change manager', 'Exit']
+    choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'add a role', 'add an employee', 'update an employee role', 'let me talk to the manager', 'change manager', 'show me the money', 'Exit']
     },
 ];
 const addDeptQuestions = [
@@ -133,6 +133,12 @@ const updateEmployeeManagerQuestions =[
     message: "Please enter the ID of the new manager."
   }
 ];
+const showMeTheMoneyQuestions = [
+  {type: 'input',
+  name: 'department_id',
+  message: "Please enter the deparment's ID to see budget:"
+}
+]
 const mainMenu = [
     {
         type: 'rawlist',
@@ -197,6 +203,9 @@ function ask() {
             case 'change manager':
               updateEmployeeManager();
               break;
+            case 'show me the money':
+              showBudget();
+            break;
           case 'Exit':
             //console.log('Eighth answer ' + desiredAction);
             exitNow();
@@ -227,9 +236,9 @@ function addDepartment() {
     //console.log(result);
   });
   db.query('SELECT * FROM department', function (err, results) {
-    //console.table(results);
+    console.table(results);
   })
-  returnToMain();
+  setTimeout(returnToMain,1000);
   });
 }
 
@@ -250,9 +259,9 @@ function addRole() {
         //console.log(result);
       });
       db.query("SELECT roles.title AS 'Job Title', roles.id AS 'Role ID', department.dept_name AS 'Department', roles.salary AS salary FROM roles JOIN department ON roles.department_id = department.id;", function (err, results) {
-        //console.table(results);
+        console.table(results);
       })
-      returnToMain();
+      setTimeout(returnToMain,1000);
       });
     }
 
@@ -274,9 +283,9 @@ function addEmployee() {
   //console.log(result);
 });
 db.query("SELECT e.id AS 'ID', e.first_name AS 'First Name', e.last_name AS 'Last Name', roles.title AS 'Job Title', department.dept_name AS 'Department', roles.salary AS 'Salary',  CONCAT(m.first_name,' ',m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN roles ON e.role_id = roles.id JOIN department ON department.id = roles.department_id;", function (err, results) {
-  //console.table(results);
+  console.table(results);
 })
-returnToMain();
+setTimeout(returnToMain,1000);
     })
 }
 
@@ -295,9 +304,9 @@ function updateEmployeeRole() {
         //console.log(result);
     });
     db.query("SELECT e.id AS 'ID', e.first_name AS 'First Name', e.last_name AS 'Last Name', roles.title AS 'Job Title', department.dept_name AS 'Department', roles.salary AS 'Salary',  CONCAT(m.first_name,' ',m.last_name) AS Manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN roles ON e.role_id = roles.id JOIN department ON department.id = roles.department_id;", function (err, results) {
-      //console.table(results);
+      console.table(results);
     })
-    returnToMain();
+    setTimeout(returnToMain,1000);
     });
 }
 
@@ -311,12 +320,26 @@ function updateEmployeeManager(){
     if (err) {
       console.log(err);
     }
-    console.log(result);
-    
+    console.table(result);
+    setTimeout(returnToMain,1000);
   });
   });
 }
 
+function showBudget() {
+  inquirer.prompt(showMeTheMoneyQuestions).then((answers) => {
+  let tableR = 'roles'
+  let department_id=answers.department_id;
+  var insertsql = "SELECT roles.department_id, SUM(roles.salary) AS 'department total' FROM roles WHERE roles.department_id = " + department_id + " GROUP BY roles.department_id;"
+db.query(insertsql, (err, results) => {
+  if (err) {
+    console.log(err);
+  }
+  console.table(results);
+  setTimeout(returnToMain,1000);
+});
+});
+}
 function exitNow() {
   console.log(
     logo({
