@@ -6,7 +6,7 @@ const mysql = require('mysql2');
 const consoleTable = require('console.table');
 const chalk = require('chalk');
 const logo = require('asciiart-logo');
-const config = require('./package.json');
+const config = require('../package.json');
 console.log(logo(config).render());
 require('events').EventEmitter.defaultMaxListeners = 15;
 const longText = "Balls!"
